@@ -1,0 +1,10 @@
+// {type:class}
+// {direction:topDown}
+// {generate:true}
+
+[Classe1|attribut:string|method():int]
+[Classe2]
+[Classe1]->[Classe2]
+
+[App||render()|onSignUp();onSignIn();onSignOut()|onShowBoolking();onCloseBooking();onMakeBooking();onDeleteBooking();onToggleFeature();onToggleCapcity();onToggleRecurring();onSetFloorParam();onSetAvailabilityParam();oneSetCurrentDateBookings();| setCalendarDate();setRoom();|loadMyBookings();]
+[App]<>-state>[|roomData;userBookings;calendarDate;selectedBooking;filterParams:currentRoom]

@@ -1,5 +1,9 @@
 if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config()
+  require('dotenv').load();
+  console.log("Environment variables");
+  console.log(`   DUMMY=${process.env.DUMMY}`);
+  console.log(`   DUMMY2=${process.env.DUMMY2}`);
+  console.log(`   DUMMY3=${process.env.DUMMY3}`);
 }
 
 const express = require('express')
