@@ -31,13 +31,17 @@ const dateAEST = date => {
   return momentTimezone(date).tz('Australia/Sydney')
 }
 
+const dateBST = date => {
+  return momentTimezone(date).tz('Europe/London')
+}
+
 // Function to calculate the duration of the hours between the start and end of the booking
 const durationHours = (bookingStart, bookingEnd) => {
   // convert the UTC Date objects to Moment.js objeccts
-  let startDateLocal = dateAEST(bookingStart)
-  let endDateLocal = dateAEST(bookingEnd)
+  let startDateUtc = moment(bookingStart)
+  let endDateUtc = moment(bookingEnd)
   // calculate the duration of the difference between the two times
-  let difference = moment.duration(endDateLocal.diff(startDateLocal))
+  let difference = moment.duration(endDateUtc.diff(startDateUtc))
   // return the difference in decimal format
   return difference.hours() + difference.minutes() / 60
 }
@@ -55,7 +59,7 @@ router.put('/rooms/:id', requireJWT, (req, res) => {
           bookings: {
             user: req.user,
             // The hour on which the booking starts, calculated from 12:00AM as time = 0
-            startHour: dateAEST(req.body.bookingStart).format('H.mm'),
+            startHour: moment(req.body.bookingStart).format('H.mm'),
             // The duration of the booking in decimal format
             duration: durationHours(req.body.bookingStart, req.body.bookingEnd),
             // Spread operator for remaining attributes
@@ -78,17 +82,17 @@ router.put('/rooms/:id', requireJWT, (req, res) => {
     // The first booking in the recurring booking range
     let firstBooking = req.body
     firstBooking.user = req.user    
-    firstBooking.startHour = dateAEST(req.body.bookingStart).format('H.mm')
+    firstBooking.startHour = moment(req.body.bookingStart).format('H.mm')
     firstBooking.duration = durationHours(req.body.bookingStart, req.body.bookingEnd)
     
     // An array containing the first booking, to which all additional bookings in the recurring range will be added
     let recurringBookings = [ firstBooking ]
     
     // A Moment.js object to track each date in the recurring range, initialised with the first date
-    let bookingDateTracker = momentTimezone(firstBooking.bookingStart).tz('Australia/Sydney')
+    let bookingDateTracker = moment(firstBooking.bookingStart)
     
     // A Moment.js date object for the final booking date in the recurring booking range - set to one hour ahead of the first booking - to calculate the number of days/weeks/months between the first and last bookings when rounded down
-    let lastBookingDate = momentTimezone(firstBooking.recurring[0]).tz('Australia/Sydney')
+    let lastBookingDate = moment(firstBooking.recurring[0])
     lastBookingDate.hour(bookingDateTracker.hour() + 1)
     
     // The number of subsequent bookings in the recurring booking date range 
@@ -115,7 +119,7 @@ router.put('/rooms/:id', requireJWT, (req, res) => {
         let newBooking = Object.assign({}, firstBooking)
         
         // Calculate the end date/time of the new booking by adding the number of units to the first booking's end date/time
-        let firstBookingEndDate = momentTimezone(firstBooking.bookingEnd).tz('Australia/Sydney')
+        let firstBookingEndDate = moment(firstBooking.bookingEnd)
         let proposedBookingDateEnd = firstBookingEndDate.add(i + 1, units)
         
         // Update the new booking object's start and end dates

@@ -11,8 +11,8 @@ function BookingElement({
 }) {
 
   const roomInfo = findRoomInfo(bookingData.roomId, roomData)
-  const startTime = momentTimezone.tz(bookingData.bookingStart, 'Australia/Sydney').format('h.mma')
-  const endTime = momentTimezone.tz(bookingData.bookingEnd, 'Australia/Sydney').format('h.mma')
+  const startTime = moment(bookingData.bookingStart).format('h.mma')
+  const endTime = moment(bookingData.bookingEnd).format('h.mma')
 
   return (
     <div className="booking__box">
