@@ -6,6 +6,7 @@ import {
   Redirect
 } from 'react-router-dom'
 import './css/style.css'
+// import './css/AVC.css'
 import moment from 'moment'
 
 import BookingForm from './components/BookingForm'
@@ -15,7 +16,9 @@ import Footer from './components/Footer'
 import Key from './components/Key'
 import MyBookings from './components/MyBookings'
 import NavBar from './components/NavBar'
+import AVCLogo from './components/AVCLogo'
 import RoomsList from './components/RoomsList'
+import RoomsListAVC from './components/RoomsListAVC'
 import SignInForm from './components/SignInForm'
 import SignUpForm from './components/SignUpForm'
 
@@ -277,7 +280,7 @@ class App extends Component {
                     {!!decodedToken && !!roomData && !loading && (
                       <div className="wrapper">
                         <div className="header header__nav header--flex">
-                          <h1 className="header__heading header__heading--main">Company Name Here</h1>
+                          <AVCLogo></AVCLogo>
                           <NavBar
                             signOut={signOut}
                             loadMyBookings={loadMyBookings}
@@ -286,7 +289,7 @@ class App extends Component {
                         </div>
                         <div className="wrapper__content">
                           <div className="header__page">
-                            <h2 className="header__heading header__heading--sub">Book a room | {moment(calendarDate).format('MMMM Do YYYY')}</h2>
+                            <h2 className="header__heading header__heading--sub">Book a room</h2>
                           </div>
                           <div className="sidebar">
                             <div className="sidebar__box">
@@ -313,7 +316,7 @@ class App extends Component {
                             </div>
                           </div>
                           <div className="content">
-                            <RoomsList
+                            <RoomsListAVC
                               rooms={filteredData}
                               onRoomSelect={this.onRoomSelect}
                               onShowBooking={this.onShowBooking}
@@ -342,7 +345,7 @@ class App extends Component {
                         !!currentRoom && (
                           <div className="wrapper">
                             <header className="header header__nav header--flex">
-                              <h1 className="header__heading header__heading--main">Company Name Here</h1>
+                              <AVCLogo></AVCLogo>
                               <NavBar
                                 signOut={signOut}
                                 loadMyBookings={loadMyBookings}
@@ -380,7 +383,7 @@ class App extends Component {
                         !!roomData && (
                           <div className="wrapper">
                             <div className="header header__nav header--flex">
-                              <h1 className="header__heading header__heading--main">Company Name Here</h1>
+                              <AVCLogo></AVCLogo>
                               <NavBar
                                 signOut={signOut}
                                 loadMyBookings={loadMyBookings}
